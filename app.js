@@ -8,14 +8,14 @@ app.get('/characters', (req, res, next) => {
     res.json({characters})
 })
 
-// app.get('/characters/:id',(req, res, next) => {
-//     const id = req.params.id
-//     res.json(characters[id-1])
-// })
+app.get('/characters/:id',(req, res, next) => {
+    const id = req.params.id
+    res.json(characters[id-1])
+})
 app.listen(port, () => console.log(`I got you on http://localhost:${port}`))
 
-characters.map((character, i) => {
-    return app.get(`/characters/${i+1}`, (req, res, next) => {
-        res.json(character)
-    })
-})
+// characters.map((character, i) => {
+//     return app.get(`/characters/${i+1}`, (req, res, next) => {
+//         res.json(character)
+//     })
+// })
