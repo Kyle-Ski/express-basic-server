@@ -3,7 +3,10 @@ const app = express()
 const port = 3030
 const characters = require('./data.json')
 const parser = require('body-parser')
+
+//general middleware applied to all requests
 app.use(parser.json())
+app.use(parser.urlencoded({extended: false}))
 
 app.get('/', (req, res, next) => res.send('YO!⛷'))
 app.get('/characters', (req, res, next) => {
@@ -24,8 +27,9 @@ app.post('/characters', (req, res, next) => {
     // hold the data that is to be posted from the request body 
     //insert new data into the characters array 
     // bring in some middleware to bring in body
-    res.send(`Yo, you be hitting my post route with ${body}`)
+    // res.send(`Yo, you be hitting my post route with ${body}`)
     console.log(body)
+    characters.push(body)
     res.json({characters: characters})
 })
 
