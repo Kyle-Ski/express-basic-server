@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3030
 const characters = require('./data.json')
+const parser = require('body-parser')
+app.use(parser.json())
 
 app.get('/', (req, res, next) => res.send('YO!⛷'))
 app.get('/characters', (req, res, next) => {
@@ -15,6 +17,16 @@ app.get('/characters/:id',(req, res, next) => {
     }
     const character = characters.filter(character => character.id == id)[0]
     res.json({character: character})
+})
+
+app.post('/characters', (req, res, next) => {
+    const body = req.body
+    // hold the data that is to be posted from the request body 
+    //insert new data into the characters array 
+    // bring in some middleware to bring in body
+    res.send(`Yo, you be hitting my post route with ${body}`)
+    console.log(body)
+    res.json({characters: characters})
 })
 
 app.use(notFound)
@@ -32,9 +44,3 @@ function errorHandler(err, req, res, next) {
 app.listen(port)
     .on('error',     console.error.bind(console))
     .on('listening', console.log.bind(console, 'I got you on http://localhost:' + port))
-// characters.map((character, i) => {
-//     return app.get(`/characters/${i+1}`, (req, res, next) => {
-//         res.json(character)
-//     })
-// })
-
