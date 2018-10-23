@@ -36,8 +36,25 @@ app.put('/characters/:id', (req, res, next) =>{
     const id = Number(req.params.id)
     const body = req.body
     const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
-    // let index = characters.indexOf(findCharacter)
     characters[findCharacterIdex] = body
+    res.json({characters: characters})
+})
+
+// app.put('/characters/:id', (req, res, next) =>{
+//     const id = Number(req.params.id)
+//     const body = req.body
+//     const newCharactersArray = characters.map(character => {
+//         if (character.id === id){
+//             return body
+//         }
+//         return character
+//     })
+// })
+
+app.delete('/characters/:id', (req, res, next) => {
+    const id = Number(req.params.id)
+    const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
+    characters.splice(findCharacterIdex, 1)
     res.json({characters: characters})
 })
 
