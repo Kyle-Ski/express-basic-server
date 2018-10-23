@@ -40,6 +40,7 @@ app.put('/characters/:id', (req, res, next) =>{
     res.json({characters: characters})
 })
 
+// Using data percistance unlike the above put method
 // app.put('/characters/:id', (req, res, next) =>{
 //     const id = Number(req.params.id)
 //     const body = req.body
@@ -53,9 +54,8 @@ app.put('/characters/:id', (req, res, next) =>{
 
 app.delete('/characters/:id', (req, res, next) => {
     const id = Number(req.params.id)
-    const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
-    characters.splice(findCharacterIdex, 1)
-    res.json({characters: characters})
+    const theyLive = characters.filter(character => character.id !== id)
+    res.json({characters: theyLive})
 })
 
 app.use(notFound)
