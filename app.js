@@ -37,7 +37,7 @@ app.put('/characters/:id', (req, res, next) =>{
     const body = req.body
     const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
     // let index = characters.indexOf(findCharacter)
-    characters.splice(findCharacterIdex, 0, body)
+    characters[findCharacterIdex] = body
     res.json({characters: characters})
 })
 
