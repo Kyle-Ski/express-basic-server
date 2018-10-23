@@ -25,11 +25,19 @@ app.get('/characters/:id',(req, res, next) => {
 app.post('/characters', (req, res, next) => {
     const body = req.body
     // hold the data that is to be posted from the request body 
-    //insert new data into the characters array 
     // bring in some middleware to bring in body
-    // res.send(`Yo, you be hitting my post route with ${body}`)
     console.log(body)
+    // insert new data into the characters array 
     characters.push(body)
+    res.json({characters: characters})
+})
+
+app.put('/characters/:id', (req, res, next) =>{
+    const id = Number(req.params.id)
+    const body = req.body
+    const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
+    // let index = characters.indexOf(findCharacter)
+    characters.splice(findCharacterIdex, 0, body)
     res.json({characters: characters})
 })
 
