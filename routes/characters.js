@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const characters = require('../data.json')
 
-router.get('/characters', (req, res, next) => {
+router.get('/', (req, res, next) => {
     res.json({characters})
 })
 
-router.get('/characters/:id',(req, res, next) => {
+router.get('/:id',(req, res, next) => {
     const id = req.params.id
     if (!(Number(id))){
         next()
@@ -14,7 +15,7 @@ router.get('/characters/:id',(req, res, next) => {
     res.json({character: character})
 })
 
-router.post('/characters', (req, res, next) => {
+router.post('/', (req, res, next) => {
     const body = req.body
     // hold the data that is to be posted from the request body 
     // bring in some middleware to bring in body
@@ -33,7 +34,7 @@ router.post('/characters', (req, res, next) => {
 // })
 
 // Using data percistance unlike the above put method
-router.put('/characters/:id', (req, res, next) =>{
+router.put('/:id', (req, res, next) =>{
     const id = Number(req.params.id)
     const body = req.body
     const newCharactersArray = characters.map(character => {
@@ -46,7 +47,7 @@ router.put('/characters/:id', (req, res, next) =>{
     res.json({ characters: newCharactersArray })
 })
 
-router.delete('/characters/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
     const id = Number(req.params.id)
     const theyLive = characters.filter(character => character.id !== id)
     res.json({characters: theyLive})
