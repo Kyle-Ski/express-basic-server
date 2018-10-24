@@ -3,12 +3,21 @@ const app = express()
 const port = 3030
 const characters = require('./data.json')
 const parser = require('body-parser')
+//Route Imports
+const charactersRoutes = require('./routes/characters')
+
+
 
 //general middleware applied to all requests
 app.use(parser.json())
 app.use(parser.urlencoded({extended: false}))
+//the route needs to below the middleware so that it has access to all the middleware we have set up
+//also needs to be above error handlers to have access to those
 
-app.get('/', (req, res, next) => res.send('YO!⛷'))
+
+app.get('/', (req, res, next) => res.send('YO!⛷, server is running'))
+app.use('/characters', charactersRoutes)
+//any requests that START with /characters will use this route^^
 app.get('/characters', (req, res, next) => {
     res.json({characters})
 })
@@ -32,25 +41,27 @@ app.post('/characters', (req, res, next) => {
     res.json({characters: characters})
 })
 
-app.put('/characters/:id', (req, res, next) =>{
-    const id = Number(req.params.id)
-    const body = req.body
-    const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
-    characters[findCharacterIdex] = body
-    res.json({characters: characters})
-})
-
-// Using data percistance unlike the above put method
 // app.put('/characters/:id', (req, res, next) =>{
 //     const id = Number(req.params.id)
 //     const body = req.body
-//     const newCharactersArray = characters.map(character => {
-//         if (character.id === id){
-//             return body
-//         }
-//         return character
-//     })
+//     const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
+//     characters[findCharacterIdex] = body
+//     res.json({characters: characters})
 // })
+
+// Using data percistance unlike the above put method
+app.put('/characters/:id', (req, res, next) =>{
+    const id = Number(req.params.id)
+    const body = req.body
+    const newCharactersArray = characters.map(character => {
+        if (character.id === id){
+            return body
+        }
+        return character
+    })
+    // res.json() with the modified array
+    res.json({ characters: newCharactersArray })
+})
 
 app.delete('/characters/:id', (req, res, next) => {
     const id = Number(req.params.id)
