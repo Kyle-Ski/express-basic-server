@@ -18,56 +18,6 @@ app.use(parser.urlencoded({extended: false}))
 app.get('/', (req, res, next) => res.send('YO!⛷, server is running'))
 app.use('/characters', charactersRoutes)
 //any requests that START with /characters will use this route^^
-app.get('/characters', (req, res, next) => {
-    res.json({characters})
-})
-
-app.get('/characters/:id',(req, res, next) => {
-    const id = req.params.id
-    if (!(Number(id))){
-        next()
-    }
-    const character = characters.filter(character => character.id == id)[0]
-    res.json({character: character})
-})
-
-app.post('/characters', (req, res, next) => {
-    const body = req.body
-    // hold the data that is to be posted from the request body 
-    // bring in some middleware to bring in body
-    console.log(body)
-    // insert new data into the characters array 
-    characters.push(body)
-    res.json({characters: characters})
-})
-
-// app.put('/characters/:id', (req, res, next) =>{
-//     const id = Number(req.params.id)
-//     const body = req.body
-//     const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
-//     characters[findCharacterIdex] = body
-//     res.json({characters: characters})
-// })
-
-// Using data percistance unlike the above put method
-app.put('/characters/:id', (req, res, next) =>{
-    const id = Number(req.params.id)
-    const body = req.body
-    const newCharactersArray = characters.map(character => {
-        if (character.id === id){
-            return body
-        }
-        return character
-    })
-    // res.json() with the modified array
-    res.json({ characters: newCharactersArray })
-})
-
-app.delete('/characters/:id', (req, res, next) => {
-    const id = Number(req.params.id)
-    const theyLive = characters.filter(character => character.id !== id)
-    res.json({characters: theyLive})
-})
 
 app.use(notFound)
 app.use(errorHandler)
