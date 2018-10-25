@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3030
+const port = process.env.PORT || 3030
 const parser = require('body-parser')
 //Route Imports
 const charactersRoutes = require('./routes/characters')
@@ -14,7 +14,7 @@ app.use(parser.urlencoded({extended: false}))
 //also needs to be above error handlers to have access to those
 
 
-app.get('/', (req, res, next) => res.send(`YO!⛷, server is running... use http://localhost:${port}/characters to start of`))
+app.get('/', (req, res, next) => res.send(`YO!⛷, server is running... use ${port}/characters to start off`))
 app.use('/characters', charactersRoutes)
 //any requests that START with /characters will use this route^^
 
@@ -32,4 +32,4 @@ function errorHandler(err, req, res, next) {
 }
 app.listen(port)
     .on('error',     console.error.bind(console))
-    .on('listening', console.log.bind(console, 'I got you on http://localhost:' + port))
+    .on('listening', console.log.bind(console, 'I got you on ' + port))
