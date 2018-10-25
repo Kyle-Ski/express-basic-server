@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3030
 const parser = require('body-parser')
+const cors = require('cors')
 //Route Imports
 const charactersRoutes = require('./routes/characters')
 
@@ -10,6 +11,7 @@ const charactersRoutes = require('./routes/characters')
 //general middleware applied to all requests
 app.use(parser.json())
 app.use(parser.urlencoded({extended: false}))
+app.use(cors())
 //the route needs to below the middleware so that it has access to all the middleware we have set up
 //also needs to be above error handlers to have access to those
 
