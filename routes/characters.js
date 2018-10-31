@@ -18,8 +18,6 @@ router.get('/:id',(req, res, next) => {
 router.post('/', (req, res, next) => {
     const body = req.body
     // hold the data that is to be posted from the request body 
-    // bring in some middleware to bring in body
-    console.log(body)
     // insert new data into the characters array 
     characters.push(body)
     res.json({characters: characters})

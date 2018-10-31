@@ -51,3 +51,18 @@
   - Routers must be app.use() at the correct place in the app's pipeline
     * After middleware
     * Before error handlers
+
+
+# Basic Express Server: Knex Migrations & Seeds
+
+## Objectives
+
+* Add knex to a project
+* Setup connection to a local database
+* Create and run migration files
+* Create and run seed files
+
+## Resources
+
+* [Knex.js Docs](https://knexjs.org/)
+* [Knex.js Docs - Schema Builder](https://knexjs.org/#Schema)
