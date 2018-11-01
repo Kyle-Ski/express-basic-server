@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-// const characters = require('../data.json')
 const knex = require('../db/connection')
 
 router.get('/', (req, res, next) => {
@@ -30,7 +29,6 @@ router.post('/', (req, res, next) => {
         .insert(body)
         .returning('*')
         .then(character => {
-            console.log(character)
             res.json({'new character': character[0]})
         })
     })
@@ -51,7 +49,7 @@ router.delete('/:id', (req, res, next) => {
     const id = Number(req.params.id)
     knex('character')
         .where('id', id)
-        .del()
+        .delete()
         .returning('*')
         .then(response => {
             res.json({'deleted character': response[0]})
