@@ -49,8 +49,13 @@ router.put('/:id', (req, res, next) =>{
 
 router.delete('/:id', (req, res, next) => {
     const id = Number(req.params.id)
-    const theyLive = characters.filter(character => character.id !== id)
-    res.json({characters: theyLive})
+    knex('character')
+        .where('id', id)
+        .del()
+        .returning('*')
+        .then(response => {
+            res.json({'deleted character': response[0]})
+        })
 })
 
 
