@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const characters = require('../data.json')
+// const characters = require('../data.json')
+const knex = require('../db/connection')
 
 router.get('/', (req, res, next) => {
-    res.json({characters})
+    knex('character')
+        .then(characters => res.json({characters}))
+        .catch(error => {
+            res.json({error: {status: 'num', message: 'wha.. wha happen?'}})
+        })
 })
 
 router.get('/:id',(req, res, next) => {
@@ -11,38 +16,35 @@ router.get('/:id',(req, res, next) => {
     if (!(Number(id))){
         next()
     }
-    const character = characters.filter(character => character.id == id)[0]
-    res.json({character: character})
+    knex('character')
+        .where('id', id)
+        .then(character => {
+            res.json({character: character[0]})
+        })
 })
 
 router.post('/', (req, res, next) => {
     const body = req.body
-    // hold the data that is to be posted from the request body 
-    // insert new data into the characters array 
-    characters.push(body)
-    res.json({characters: characters})
-})
-
-// router.put('/characters/:id', (req, res, next) =>{
-//     const id = Number(req.params.id)
-//     const body = req.body
-//     const findCharacterIdex = characters.indexOf(characters.filter(character => character.id === id)[0])
-//     characters[findCharacterIdex] = body
-//     res.json({characters: characters})
-// })
-
-// Using data percistance unlike the above put method
+    knex('character')
+        .insert(body)
+        .returning('*')
+        .then(character => {
+            console.log(character)
+            res.json({'new character': character[0]})
+        })
+    })
+    
 router.put('/:id', (req, res, next) =>{
     const id = Number(req.params.id)
     const body = req.body
-    const newCharactersArray = characters.map(character => {
-        if (character.id === id){
-            return body
-        }
-        return character
-    })
-    // res.json() with the modified array
-    res.json({ characters: newCharactersArray })
+    knex('character')
+        .where('id', id)
+        .update(body)
+        .returning('*')
+        .then(response => {
+            console.log(response)
+            res.json({ character: response[0] })
+        })
 })
 
 router.delete('/:id', (req, res, next) => {

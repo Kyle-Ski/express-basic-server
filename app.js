@@ -16,7 +16,8 @@ app.use(cors())
 //also needs to be above error handlers to have access to those
 
 
-app.get('/', (req, res, next) => res.send(`YO!⛷, server is running... use ${port}/characters to start off`))
+app.get('/', (req, res, next) => res.json({message: `YO!⛷, server is running... use ${port}/characters to start off`,
+                                            localhost: `http://localhost:${port}`}))
 app.use('/characters', charactersRoutes)
 //any requests that START with /characters will use this route^^
 
