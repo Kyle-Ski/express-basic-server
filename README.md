@@ -66,3 +66,18 @@
 
 * [Knex.js Docs](https://knexjs.org/)
 * [Knex.js Docs - Schema Builder](https://knexjs.org/#Schema)
+
+# Basic Express Server: Knex CRUD
+
+## Objectives
+
+* Implement CRUD functionality using Knex!
+  - Create (POST)
+  - Read (GET all, GET one)
+  - Update (PUT)
+  - Delete (DELETE)
+
+## Resources
+
+* [Knex.js Docs](https://knexjs.org/)
+* [Knex Cheat Sheet](https://devhints.io/knex)
