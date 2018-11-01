@@ -5,6 +5,7 @@ const knex = require('../db/connection')
 
 router.get('/', (req, res, next) => {
     knex('character')
+        .orderBy('id', 'asc')
         .then(characters => res.json({characters}))
         .catch(error => {
             res.json({error: {status: 'num', message: 'wha.. wha happen?'}})
@@ -42,7 +43,6 @@ router.put('/:id', (req, res, next) =>{
         .update(body)
         .returning('*')
         .then(response => {
-            console.log(response)
             res.json({ character: response[0] })
         })
 })
